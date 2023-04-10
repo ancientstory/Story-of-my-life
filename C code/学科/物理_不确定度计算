@@ -1,0 +1,44 @@
+//不确定度计算
+#include<stdio.h>
+#include<math.h>
+int main(void)
+{
+	int num,i;
+	double average;
+	double data[10];
+
+	//数据输入
+	puts("输入数据个数和平均值");
+	scanf_s("%d%lf", &num, &average);
+	puts("输入数据");
+	for (i = 0; i < num; i++)
+		scanf_s("%lf", &data[i]);
+	data[i] = '\0';
+	//数据处理
+	double deviation;//偏差
+	double dev_sum = 0;
+	for (i = 0; i < num; i++)
+		dev_sum += (data[i] - average) * (data[i] - average);
+	deviation = sqrt(dev_sum / (num - 1));
+	printf_s("偏差为%lf\n", deviation);
+
+	double uncertainty_A;
+	deviation /= sqrt((float)num);
+	switch (num) {
+	case 2:
+		uncertainty_A = deviation * 1.84;
+		break;
+	case 3:
+		uncertainty_A = deviation * 1.32;
+		break;
+	case 4:
+		uncertainty_A = deviation * 1.2;
+		break;
+	case 5:
+		uncertainty_A = deviation * 1.14;
+		break;
+	default:
+		uncertainty_A = deviation;
+	}
+	printf("A类不确定度为%lf", uncertainty_A);
+}
